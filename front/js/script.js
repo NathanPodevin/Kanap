@@ -32,7 +32,7 @@ async function productCard() {
               </article>
             </a>`;
     }
-    const productTemplate = document.querySelector("#items a");
+    const productTemplate = document.querySelector("#items a"); //Supression de la carte produit de base
     productTemplate.style.display = "none";
 }
 productCard();
