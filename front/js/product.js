@@ -46,3 +46,16 @@ function productInfo(product) {
         price.textContent =  (`${product.price}` * `${event.target.value}`);
       });
 }
+
+let addCart = document.getElementById("addToCart");
+
+addCart.addEventListener('click', () => {
+    let infoCart = {
+        id: productId,
+        color: colors.value,
+        quantity: quantity.value,
+    }
+
+    let infoCartLinea = JSON.stringify(infoCart);
+    localStorage.setItem("obj",infoCartLinea);
+  });
