@@ -2,7 +2,7 @@
 let productUrl = (new URL(window.location)).searchParams;
 let productId = productUrl.get("id");
 
-/*J'initialise mon tableau produits qui récupèrera les données de mon Api*/
+/*J'initialise mes variables qui récupèreront les données de mon Api*/
 let productImg = document.querySelector(".item__img");
 let title = document.getElementById("title");
 let price = document.getElementById("price");
@@ -55,7 +55,34 @@ addCart.addEventListener('click', () => {
         color: colors.value,
         quantity: quantity.value,
     }
+    addStorage(infoCart);
+    console.log(infoCart);
 
-    let infoCartLinea = JSON.stringify(infoCart);
-    localStorage.setItem("obj",infoCartLinea);
+    function addStorage(){
+
+    const popupValidation = () => {
+        if(window.confirm(
+`Le produit a bien été ajouté !
+Voulez-vous aller au panier ?`)) {
+        window.location.href = "cart.html";
+        }
+        else {
+        }
+    }
+
+    let productInStorage = JSON.parse(localStorage.getItem('produit'));
+
+    if(productInStorage){
+        productInStorage.push(infoCart); 
+        localStorage.setItem('produit', JSON.stringify(productInStorage));
+        console.log(productInStorage);
+        popupValidation();
+    }
+    else{
+        productInStorage = [];
+        productInStorage.push(infoCart); 
+        localStorage.setItem('produit', JSON.stringify(productInStorage));
+        popupValidation();
+        }
+    }
   });
