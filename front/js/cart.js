@@ -1,5 +1,4 @@
 let productInStorage = JSON.parse(localStorage.getItem('produit'));
-console.log(productInStorage);
 
 /* J'initialise mes variables pour récupérer les différents éléments de mon html */
 let cart = document.getElementById("cart__items");
@@ -18,7 +17,6 @@ let totalPrc = 0;
 function displayCart() {
 /* Je crée ma boucle pour chacun des produits de mon localStorage */
     for(let productStored of productInStorage) {    
-        console.log(productStored);
 /* Je récupère les produits de mon Api avec Get */
             fetch(`http://localhost:3000/api/products/${productStored.id}`)
                 .then(function(res) {
@@ -28,7 +26,6 @@ function displayCart() {
                 })
                 .then(function(data) { 
                     displayInfo(data);
-                    console.log(data);
                 })
                 .catch(function(err) {
                     console.log("une erreur est survenue", err);
@@ -40,10 +37,15 @@ function displayCart() {
 /* Je mets en place les calculs pour trouver ma quantité et mon prix total */
           totalQtt += Number(productStored.quantity);
           totalPrc += Number(productStored.quantity) * Number(product.price);
-          console.log(totalQtt);
-          console.log(totalPrc);
 /* Je mets en place mon calcul pour trouver le prix de mets lots de produits */
           let productPrc = product.price * productStored.quantity;
+          itemQuantity.addEventListener('change', (event) => {
+            let newQuantity = localStorage['produit'];
+            newQuantity['quantity'] = event.target.value;
+            localStorage['produit'] = newQuantity;
+            console.log(newQuantity);
+          });
+          
 /* J'affiche dans mon html les informations en focntion de mon produit */  
           cart.innerHTML += 
             ` <article class="cart__item" data-id="${productStored.id}" data-color="${productStored.color}">
@@ -69,8 +71,8 @@ function displayCart() {
             </article>
             </section>
             `
-            totalQuantity.innerText = totalQtt;
-            totalPrice.innerText = totalPrc;
+          totalQuantity.innerText = totalQtt;
+          totalPrice.innerText = totalPrc;
         }
         const productTemplate = document.querySelector("#cart__items article"); //Supression de la carte produit de base
         productTemplate.style.display = "none";

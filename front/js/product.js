@@ -48,8 +48,9 @@ function productInfo(product) {
 }
 
 let addCart = document.getElementById("addToCart");
-
+/*Ajout d'un addEventListener pour quand l'utilisateur clique sur "Ajouter au panier"*/
 addCart.addEventListener('click', () => {
+/*On initialise notre objet avec les informations qu'on voudra récupérer dans le localStorage*/
     let infoCart = {
         id: productId,
         color: colors.value,
@@ -57,9 +58,9 @@ addCart.addEventListener('click', () => {
     }
     addStorage(infoCart);
     console.log(infoCart);
-
+/*On crée notre fonction pour envoyer les produits dans le localStorage*/
     function addStorage(){
-
+/*On crée notre pop up pour informer les utilisateurs qu'ils ont bien ajouté le produit au panier*/
     const popupValidation = () => {
         if(window.confirm(
 `Le produit a bien été ajouté !
@@ -71,18 +72,31 @@ Voulez-vous aller au panier ?`)) {
     }
 
     let productInStorage = JSON.parse(localStorage.getItem('produit'));
-
-    if(productInStorage){
-        productInStorage.push(infoCart); 
-        localStorage.setItem('produit', JSON.stringify(productInStorage));
-        console.log(productInStorage);
-        popupValidation();
-    }
-    else{
+/*Je crée mes conditions pour l'ajout dans le localStorage*/
+/*Si mon localStorage est vide j'initialise un tableau qui récupèrera les infos*/
+    if(productInStorage == null){
         productInStorage = [];
         productInStorage.push(infoCart); 
         localStorage.setItem('produit', JSON.stringify(productInStorage));
         popupValidation();
+    }
+/*Je vérifie si mon nouveau produit a la même couleur et le même ID qu'un produit déjà stocké dans le localStorage*/
+    else if(productInStorage){
+        let getProduct = productInStorage.find(
+            (element) =>
+              element.id == infoCart.id && element.color == infoCart.color);
+/*Si oui j'ajoute que la nouvelle quantité*/        
+        if (getProduct){
+            getProduct.quantity = Number(infoCart.quantity) + Number(getProduct.quantity);
+            localStorage.setItem('produit', JSON.stringify(productInStorage));
+            popupValidation();
+        } 
+/*Sinon j'ajoute le produit*/        
+        else {
+            productInStorage.push(infoCart); 
+            localStorage.setItem('produit', JSON.stringify(productInStorage));
+            popupValidation();
+            }
         }
     }
-  });
+});
