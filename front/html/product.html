@@ -65,7 +65,8 @@
                 <div class="item__content__settings__color">
                   <label for="color-select">Choisir une couleur :</label>
                   <select name="color-select" id="colors" required>
-                      <option value="">--SVP, choisissez une couleur --</option>
+                    <optgroup>
+                      <option value="" selected disabled>--SVP, choisissez une couleur --</option>
 <!--                       <option value="vert">vert</option>
                       <option value="blanc">blanc</option> -->
                   </select>
@@ -111,5 +112,6 @@
       </div>
     </footer>
   <script src="../js/product.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>
