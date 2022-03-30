@@ -49,6 +49,7 @@ function productInfo(product) {
       });
 }
 
+console.log(window.navigator);
 /*Ajout d'un addEventListener pour quand l'utilisateur clique sur "Ajouter au panier"*/
 addToCart.addEventListener('click', () => {
 
@@ -84,10 +85,10 @@ addToCart.addEventListener('click', () => {
         function addStorage(){
 /*On crée notre pop up pour informer les utilisateurs qu'ils ont bien ajouté le produit au panier*/
             const popupValidation = () => {
-                Swal.fire({
+                    Swal.fire({
                     icon: 'success',
                     title: 'Félicitations !',
-                    text: 'Votre produit a bien été ajouté au panier!',
+                    text: 'Votre produit a bien été ajouté au panier !',
                     footer: '<a href="./cart.html">Voir mon panier</a>',
                 })
             }

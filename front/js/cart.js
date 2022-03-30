@@ -129,6 +129,9 @@ function displayCart() {
                     localStorage.setItem("produit", JSON.stringify(productInStorage));
                     recalc();
                   }
+                  if(totalQuantity.innerText == 0 && totalPrice.innerText == 0 ){
+                    localStorage.clear();
+                  }
                 }
               })
             })
@@ -276,8 +279,19 @@ function displayCart() {
   formSubmit.addEventListener('click', (event) => {
     event.preventDefault();
 
-    if(validFirstName(contact.firstName) == false || validFirstName(contact.firstName) == null || validLastName(contact.lastName) == false || validLastName(contact.lastName) == null || validAddress(contact.address) == false || validAddress(contact.address) == null || validCity(contact.city) == false || validCity(contact.city) == null || validEmail(contact.email) == false || validEmail(contact.email) == null || productInStorage == null){
+    if(validFirstName(contact.firstName) == false || validFirstName(contact.firstName) == null || validLastName(contact.lastName) == false || validLastName(contact.lastName) == null || validAddress(contact.address) == false || validAddress(contact.address) == null || validCity(contact.city) == false || validCity(contact.city) == null || validEmail(contact.email) == false || validEmail(contact.email) == null){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops ...',
+        text: "Veuillez vérifier vos informations !",
+      });
       return firstNameErrMsg || lastNameErrMsg || addressErrMsg || cityErrMsg ||emailErrMsg;
+    }else if(productInStorage == null || productInStorage == [] || totalPrice.innerText == 0){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops ...',
+        text: "Votre panier est vide !",
+      });
     }else{
     fetch("http://localhost:3000/api/products/order", {
       method: "POST",
